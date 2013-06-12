@@ -7,12 +7,13 @@
 	</parent>
 
 	<groupId>com.datical.integration.jenkins</groupId>
-	<artifactId>DaticalDB4Jenkins</artifactId>
+	<artifactId>datical-db-plugin</artifactId>
 	<version>1.0.2-SNAPSHOT</version>
 	<packaging>hpi</packaging>
+	<name>DaticalDB4Jenkins</name>
 
 	<description>Provides easy access to Datical DB in Jenkins</description>
-	<url>http://wiki.jenkins-ci.org/display/JENKINS/datical-db-plugin</url>
+	<url>http://wiki.jenkins-ci.org/display/JENKINS/DaticalDB4Jenkins</url>
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -36,9 +37,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/jenkinsci/datical-db-plugin.git</connection>
-		<developerConnection>scm:git:git@github.com:jenkinsci/datical-db-plugin.git</developerConnection>
-		<url>http://github.com/jenkinsci/datical-db-plugin.git</url>
+		<connection>scm:git:git://github.com/jenkinsci/${project.artifactId}.git</connection>
+		<developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}.git</developerConnection>
+		<url>https://github.com/jenkinsci/${project.artifactId}.git</url>
 	</scm>
 
 	<!-- get every artifact through repo.jenkins-ci.org, which proxies all the 
