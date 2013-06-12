@@ -97,6 +97,22 @@ public class DaticalDBBuilder extends Builder {
 		String daticalDriversArg = "--drivers=" + getDescriptor().getDaticalDBDriversDir();
 		String daticalProjectArg = "--project=" + daticalDBProjectDir;
 
+		// TODO: this is less than ideal, but we need to check that daticalDBAction is set, having issues with FormValidation for daticalDBAction
+		if (daticalDBAction.isEmpty()) { 
+			final String errorMessage = "Datical DB Action must be set. Please update the Datical DB build step in the project's configuration.";
+			listener.fatalError(errorMessage);
+			return false;
+		}
+		// TODO: more of the same, need to get FormValidation doing this daticalDBServer check
+		// forecast, snapshot, deploy need the DB Server set
+		if (daticalDBAction.equals("forecast") || daticalDBAction.equals("snapshot") || daticalDBAction.equals("deploy")) {
+			if (daticalDBServer.isEmpty()) {
+				final String errorMessage = "Datical DB Server must be set if the Datical DB Action is \"" + daticalDBAction + "\". Please update Datical DB build step in the project's configuration.";
+				listener.fatalError(errorMessage);
+				return false;
+			}
+		}
+		
 		String commandLine = daticalCmd + " " + "\"" + daticalDriversArg + "\"" + " " + "\"" + daticalProjectArg + "\"" + " " + getDaticalDBActionForCmd(daticalDBAction, daticalDBServer);
 		String cmdLine = convertSeparator(commandLine, (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP));
 
@@ -158,25 +174,13 @@ public class DaticalDBBuilder extends Builder {
 		// See config.jelly for all options used.
 		String daticalDBActionForCmd = null;
 
-		if (daticalDBAction.equals("forecast")) {
-
-			daticalDBActionForCmd = daticalDBAction + " " + "\"" + daticalDBServer + "\"";
-
-		} else if (daticalDBAction.equals("snapshot")) {
-
-			daticalDBActionForCmd = daticalDBAction + " " + "\"" + daticalDBServer + "\"";
-
-		} else if (daticalDBAction.equals("deploy")) {
-
-			daticalDBActionForCmd = daticalDBAction + " " + "\"" + daticalDBServer + "\"";
-
-		} else if (daticalDBAction.equals("status")) {
-
-			daticalDBActionForCmd = daticalDBAction + " " + "\"" + daticalDBServer + "\"";
-
-		} else if (daticalDBAction.equals("checkdrivers")) {
+		if (daticalDBAction.equals("checkdrivers")) {
 
 			daticalDBActionForCmd = daticalDBAction;
+
+		} else {
+			
+			daticalDBActionForCmd = daticalDBAction + " " + "\"" + daticalDBServer + "\"";
 
 		}
 
@@ -242,7 +246,7 @@ public class DaticalDBBuilder extends Builder {
 			return FormValidation.ok();
 
 		}
-
+		
 		public boolean isApplicable(Class<? extends AbstractProject> aClass) {
 			// Indicates that this builder can be used with all kinds of project
 			// types
