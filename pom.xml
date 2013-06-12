@@ -21,12 +21,12 @@
 		</license>
 	</licenses>
 
-	<distributionManagement>
-		<repository>
-			<id>maven.jenkins-ci.org</id>
-			<url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
-		</repository>
-	</distributionManagement>
+<distributionManagement>
+    <site>
+      <id>github-project-site</id>
+      <url>gitsite:git@github.com/jenkinsci/datical-db-plugin</url>
+    </site>
+  </distributionManagement>
 	
 	<developers>
 		<developer>
