@@ -81,6 +81,7 @@ public class DaticalDBBuilder extends Builder {
 
 		// construct the command
 		String daticalCmd = getDescriptor().getDaticalDBInstallDir() + "\\repl\\hammer";
+		daticalCmd = convertSeparator(daticalCmd, (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP));
 		if (!launcher.isUnix()) {
 			daticalCmd = daticalCmd + ".bat";
 		}
@@ -127,7 +128,7 @@ public class DaticalDBBuilder extends Builder {
 
 		ArgumentListBuilder args = new ArgumentListBuilder();
 		if (cmdLine != null) {
-			args.addTokenized((launcher.isUnix()) ? "./" + cmdLine : cmdLine);
+			args.addTokenized((launcher.isUnix()) ? cmdLine : cmdLine);
 			listener.getLogger().println("Execute from working directory: " + args.toStringWithQuote());
 		}
 
