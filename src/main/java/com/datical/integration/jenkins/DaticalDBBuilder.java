@@ -114,6 +114,12 @@ public class DaticalDBBuilder extends Builder {
 			}
 		}
 		
+		//check and encode path for spaces (windows environment)
+		if (!launcher.isUnix()) {
+			
+			daticalCmd = encodeCmdLine(daticalCmd);
+		}
+		
 		String commandLine = daticalCmd + " " + "\"" + daticalDriversArg + "\"" + " " + "\"" + daticalProjectArg + "\"" + " " + getDaticalDBActionForCmd(daticalDBAction, daticalDBServer);
 		String cmdLine = convertSeparator(commandLine, (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP));
 
@@ -308,6 +314,51 @@ public class DaticalDBBuilder extends Builder {
 		return sb.toString();
 	}
 
+	/**
+	 * Corrects Windows Path Issues containing spaces.  E.g,
+	 * Assuming a standard installation of DaticalDB
+	 * C:\Program Files\DaticalDB
+	 * 
+	 * @return The command with encoded double quotes.
+	 */
+	
+	public static String encodeCmdLine(String cmdLine){
+		
+		String REGEX = "\\s+";
+		
+		Pattern p = Pattern.compile(REGEX);
+		String[] s = p.split(cmdLine);
+		
+		//if no spaces then just return the path as is
+		if (s.length == 1) {
+			
+			return cmdLine;
+			
+		}
+		
+		//otherwise we need to escape the path
+		StringBuffer sb = new StringBuffer();
+		
+		for(int x = 0; x < s.length; x++)
+		{
+			if (x == 0){
+				sb.append("\"").append(s[x]).append(" ");
+				
+			}else{
+				if (x == (s.length -1)){
+					sb.append(s[x]).append("\"");
+				}else{
+					sb.append(s[x]).append(" ");
+				}
+				
+			}
+			
+		}
+		
+		return sb.toString();
+		
+	}
+	
 	/**
 	 * Convert Windows-style environment variables to UNIX-style. E.g.
 	 * "script --opt=%OPT%" to "script --opt=$OPT"
