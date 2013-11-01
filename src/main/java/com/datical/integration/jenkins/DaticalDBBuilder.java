@@ -36,8 +36,7 @@ public class DaticalDBBuilder extends Builder {
 
 	private final String daticalDBProjectDir;
 	private final String daticalDBServer;
-	private final String daticalDBAction; // Forecast, Snapshot, Deploy,
-											// Rollback
+	private final String daticalDBAction; // Forecast, Snapshot, Deploy, Rollback, diffChangelog
 
 	// Fields in config.jelly must match the parameter names in the
 	// "DataBoundConstructor"
@@ -106,7 +105,7 @@ public class DaticalDBBuilder extends Builder {
 		}
 		// TODO: more of the same, need to get FormValidation doing this daticalDBServer check
 		// forecast, snapshot, deploy need the DB Server set
-		if (daticalDBAction.equals("forecast") || daticalDBAction.equals("snapshot") || daticalDBAction.equals("deploy")) {
+		if (daticalDBAction.equals("forecast") || daticalDBAction.equals("snapshot") || daticalDBAction.equals("deploy") || daticalDBAction.equals("diffChangelog")) {
 			if (daticalDBServer.isEmpty()) {
 				final String errorMessage = "Datical DB Server must be set if the Datical DB Action is \"" + daticalDBAction + "\". Please update Datical DB build step in the project's configuration.";
 				listener.fatalError(errorMessage);
@@ -184,7 +183,11 @@ public class DaticalDBBuilder extends Builder {
 		if (daticalDBAction.equals("checkdrivers")) {
 
 			daticalDBActionForCmd = daticalDBAction;
-
+		
+		} else if (daticalDBAction.equals("diffchangelog")) {
+			
+			daticalDBActionForCmd = "diffChangelog" + " " + daticalDBServer;
+			
 		} else {
 			
 			daticalDBActionForCmd = daticalDBAction + " " + "\"" + daticalDBServer + "\"";

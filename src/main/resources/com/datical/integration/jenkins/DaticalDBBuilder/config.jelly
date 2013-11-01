@@ -19,6 +19,7 @@
   	<f:radio name="daticalDBAction" value="deploy" title="Deploy" checked="${if (instance.getDaticalDBAction().compareTo('deploy')==0) true; else false;}"/>
   	<f:radio name="daticalDBAction" value="status" title="Status" checked="${if (instance.getDaticalDBAction().compareTo('status')==0) true; else false;}"/>
   	<f:radio name="daticalDBAction" value="checkdrivers" title="Check Drivers" checked="${if (instance.getDaticalDBAction().compareTo('checkdrivers')==0) true; else false;}"/>
+  	<f:radio name="daticalDBAction" value="diffChangelog" title="Generate Change Log from Differences" checked="${if (instance.getDaticalDBAction().compareTo('diffChangelog')==0) true; else false;}"/>
   </f:entry>
   
 
