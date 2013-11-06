@@ -275,6 +275,7 @@ public class DaticalDBBuilder extends Builder {
 			// To persist global configuration information,
 			// set that to properties and call save().
 			daticalDBInstallDir = formData.getString("daticalDBInstallDir");
+			daticalDBDriversDir = formData.getString("daticalDBDriversDir");
 
 			// ^Can also use req.bindJSON(this, formData);
 			// (easier when there are many fields; need set* methods for this,
