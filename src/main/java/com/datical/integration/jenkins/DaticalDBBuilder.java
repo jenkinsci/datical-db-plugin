@@ -190,7 +190,7 @@ public class DaticalDBBuilder extends Builder {
 			
 		} else {
 			
-			daticalDBActionForCmd = daticalDBAction + " " + "\"" + daticalDBServer + "\"";
+			daticalDBActionForCmd = daticalDBAction + " " + daticalDBServer;
 
 		}
 
