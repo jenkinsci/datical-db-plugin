@@ -21,4 +21,6 @@ mvn -Dresume=false release:prepare release:perform
 
 Select the defaults
 
-mvn -Dresume=false release:prepare release:perform (yep, run it again)
+Verify release at https://wiki.jenkins-ci.org/display/JENKINS/DaticalDB4Jenkins after a day or so
+
+
