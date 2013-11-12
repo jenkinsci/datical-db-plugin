@@ -14,12 +14,17 @@
   </f:entry>
 
   <f:entry title="Action" name="daticalDBAction" field="daticalDBAction">
-  	<f:radio name="daticalDBAction" value="forecast" title="Forecast" checked="${if (instance.getDaticalDBAction().compareTo('forecast')==0) true; else false;}"/>
-  	<f:radio name="daticalDBAction" value="snapshot" title="Snapshot" checked="${if (instance.getDaticalDBAction().compareTo('snapshot')==0) true; else false;}"/>
-  	<f:radio name="daticalDBAction" value="deploy" title="Deploy" checked="${if (instance.getDaticalDBAction().compareTo('deploy')==0) true; else false;}"/>
-  	<f:radio name="daticalDBAction" value="status" title="Status" checked="${if (instance.getDaticalDBAction().compareTo('status')==0) true; else false;}"/>
-  	<f:radio name="daticalDBAction" value="checkdrivers" title="Check Drivers" checked="${if (instance.getDaticalDBAction().compareTo('checkdrivers')==0) true; else false;}"/>
-  	<f:radio name="daticalDBAction" value="diffChangelog" title="Generate Change Log from Differences" checked="${if (instance.getDaticalDBAction().compareTo('diffChangelog')==0) true; else false;}"/>
+  	<select name="daticalDBAction">
+  		<option value="forecast" selected="${if (instance.getDaticalDBAction().compareTo('forecast')==0) selected=true;}">Forecast</option> 
+  		<option value="snapshot" selected="${if (instance.getDaticalDBAction().compareTo('snapshot')==0) selected=true;}">Snapshot</option> 
+  		<option value="deploy" selected="${if (instance.getDaticalDBAction().compareTo('deploy')==0) selected=true;}">Deploy</option>
+  		<option value="status" selected="${if (instance.getDaticalDBAction().compareTo('status')==0) selected=true;}">Status</option>
+  		<option value="checkdrivers" selected="${if (instance.getDaticalDBAction().compareTo('checkdrivers')==0) selected=true;}">Check Drivers</option> 
+  		<option value="diffChangelog" selected="${if (instance.getDaticalDBAction().compareTo('diffChangelog')==0) selected=true;}">Generate Change Log from Differences</option>
+  		<option value="diff" selected="${if (instance.getDaticalDBAction().compareTo('diff')==0) selected=true;}">Generate Report from Differences</option>
+  		<option value="history" selected="${if (instance.getDaticalDBAction().compareTo('history')==0) selected=true;}">History</option>
+  		 
+  	</select>
   </f:entry>
   
 
