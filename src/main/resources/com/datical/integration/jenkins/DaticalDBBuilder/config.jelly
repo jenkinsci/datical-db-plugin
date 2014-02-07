@@ -23,6 +23,8 @@
   		<option value="diffChangelog" selected="${if (instance.getDaticalDBAction().compareTo('diffChangelog')==0) selected=true;}">Generate Change Log from Differences</option>
   		<option value="diff" selected="${if (instance.getDaticalDBAction().compareTo('diff')==0) selected=true;}">Generate Report from Differences</option>
   		<option value="history" selected="${if (instance.getDaticalDBAction().compareTo('history')==0) selected=true;}">History</option>
+  		<option value="rollback" selected="${if (instance.getDaticalDBAction().compareTo('rollback')==0) selected=true;}">Rollback</option>
+  		<option value="deploy-autoRollback" selected="${if (instance.getDaticalDBAction().compareTo('deploy-autoRollback')==0) selected=true;}">Deploy with Auto Rollback</option>
   		 
   	</select>
   </f:entry>

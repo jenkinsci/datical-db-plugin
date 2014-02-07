@@ -105,7 +105,7 @@ public class DaticalDBBuilder extends Builder {
 		}
 		// TODO: more of the same, need to get FormValidation doing this daticalDBServer check
 		// forecast, snapshot, deploy, diffChangelog, diff need the DB Server set
-		if (daticalDBAction.equals("forecast") || daticalDBAction.equals("snapshot") || daticalDBAction.equals("deploy") || daticalDBAction.equals("diffChangelog") || daticalDBAction.equals("diff")) {
+		if (daticalDBAction.equals("forecast") || daticalDBAction.equals("snapshot") || daticalDBAction.equals("deploy") || daticalDBAction.equals("diffChangelog") || daticalDBAction.equals("diff") || daticalDBAction.equals("rollback") || daticalDBAction.equals("deploy-autoRollback")) {
 			if (daticalDBServer.isEmpty()) {
 				final String errorMessage = "Datical DB Server must be set if the Datical DB Action is \"" + daticalDBAction + "\". Please update Datical DB build step in the project's configuration.";
 				listener.fatalError(errorMessage);
