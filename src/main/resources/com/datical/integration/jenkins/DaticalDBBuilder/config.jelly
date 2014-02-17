@@ -26,9 +26,14 @@
   		<option value="history" selected="${if (instance.getDaticalDBAction().compareTo('history')==0) selected=true;}">History</option>
   		<option value="rollback" selected="${if (instance.getDaticalDBAction().compareTo('rollback')==0) selected=true;}">Rollback</option>
   		<option value="deploy-autoRollback" selected="${if (instance.getDaticalDBAction().compareTo('deploy-autoRollback')==0) selected=true;}">Deploy with Auto Rollback</option>
-  		 
   	</select>
   </f:entry>
   
+
+  <f:advanced>
+    <f:entry title="Datical DB Command" field="daticalDBCmdProject">
+      <f:textbox />
+    </f:entry>
+  </f:advanced>
 
 </j:jelly>

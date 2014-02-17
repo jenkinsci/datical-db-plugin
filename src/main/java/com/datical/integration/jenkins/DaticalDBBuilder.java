@@ -37,15 +37,17 @@ public class DaticalDBBuilder extends Builder {
 	private final String daticalDBProjectDir;
 	private final String daticalDBServer;
 	private final String daticalDBAction; // forecast, snapshot, deploy, rollback, diffChangelog, diff, history
+	private final String daticalDBCmdProject;
 
 	// Fields in config.jelly must match the parameter names in the
 	// "DataBoundConstructor"
 	@DataBoundConstructor
-	public DaticalDBBuilder(String daticalDBProjectDir, String daticalDBServer, String daticalDBAction) {
+	public DaticalDBBuilder(String daticalDBProjectDir, String daticalDBServer, String daticalDBAction, String daticalDBCmdProject) {
 
 		this.daticalDBProjectDir = daticalDBProjectDir;
 		this.daticalDBServer = daticalDBServer;
 		this.daticalDBAction = daticalDBAction;
+		this.daticalDBCmdProject = daticalDBCmdProject;
 
 	}
 
@@ -60,6 +62,10 @@ public class DaticalDBBuilder extends Builder {
 	public String getDaticalDBAction() {
 		return daticalDBAction;
 	}
+	
+	public String getDaticalDBCmdProject() {
+		return daticalDBCmdProject;
+	}
 
 	@Override
 	public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
@@ -69,30 +75,22 @@ public class DaticalDBBuilder extends Builder {
 
 		listener.getLogger().println("Datical DB Global Config:");
 
-		listener.getLogger().println("Datical DB Install Dir = " + getDescriptor().getDaticalDBInstallDir());
+		listener.getLogger().println("Datical DB Command = " + getDescriptor().getDaticalDBCmd());
+		listener.getLogger().println("Datical DB Command (Project) = " + daticalDBCmdProject);
 		listener.getLogger().println("Datical DB Drivers Dir = " + getDescriptor().getDaticalDBDriversDir());
-
-		listener.getLogger().println("Datical DB Project Config:");
-
 		listener.getLogger().println("Datical DB Project Dir = " + daticalDBProjectDir);
 		listener.getLogger().println("Datical DB Server = " + daticalDBServer);
 		listener.getLogger().println("Datical DB Action = " + daticalDBAction);
 
 		// construct the command
-		String daticalCmd = getDescriptor().getDaticalDBInstallDir() + "\\repl\\hammer";
-		daticalCmd = convertSeparator(daticalCmd, (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP));
-		if (!launcher.isUnix()) {
-			daticalCmd = daticalCmd + ".bat";
+		String daticalCmd;
+		if (daticalDBCmdProject.isEmpty()) {
+			listener.getLogger().println("Using Global Datical DB Command " + getDescriptor().getDaticalDBCmd());
+			daticalCmd = convertSeparator(getDescriptor().getDaticalDBCmd(), (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP));
+		} else {
+			listener.getLogger().println("Using Global Datical DB Command " + daticalDBCmdProject);
+			daticalCmd = convertSeparator(daticalDBCmdProject, (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP));
 		}
-		File daticalCmdFile = new File(daticalCmd);
-		if (!daticalCmdFile.exists()) {
-			// might have used the CLI installer, so let's get rid of the "repl"
-			daticalCmd = getDescriptor().getDaticalDBInstallDir() + "\\hammer";
-			if (!launcher.isUnix()) {
-				daticalCmd = daticalCmd + ".bat";
-			}
-		}
-		
 		
 		String daticalDriversArg = "--drivers=" + getDescriptor().getDaticalDBDriversDir();
 		String daticalProjectArg = "--project=" + daticalDBProjectDir;
@@ -226,17 +224,17 @@ public class DaticalDBBuilder extends Builder {
 		 * <p>
 		 * If you don't want fields to be persisted, use <tt>transient</tt>.
 		 */
-		private String daticalDBInstallDir;
+		private String daticalDBCmd;
 		private String daticalDBDriversDir;
 
 		public DescriptorImpl() {
             load();
         }
 
-		public FormValidation doCheckDaticalDBInstallDir(@QueryParameter String value) throws IOException, ServletException {
+		public FormValidation doCheckDaticalDBCmd(@QueryParameter String value) throws IOException, ServletException {
 
 			if (value.length() == 0)
-				return FormValidation.error("Please set the Datical DB Installation Directory");
+				return FormValidation.error("Please set the Datical DB Command");
 			return FormValidation.ok();
 
 		}
@@ -274,7 +272,7 @@ public class DaticalDBBuilder extends Builder {
 		public boolean configure(StaplerRequest req, JSONObject formData) throws FormException {
 			// To persist global configuration information,
 			// set that to properties and call save().
-			daticalDBInstallDir = formData.getString("daticalDBInstallDir");
+			daticalDBCmd = formData.getString("daticalDBCmd");
 			daticalDBDriversDir = formData.getString("daticalDBDriversDir");
 
 			// ^Can also use req.bindJSON(this, formData);
@@ -284,8 +282,8 @@ public class DaticalDBBuilder extends Builder {
 			return super.configure(req, formData);
 		}
 
-		public String getDaticalDBInstallDir() {
-			return daticalDBInstallDir;
+		public String getDaticalDBCmd() {
+			return daticalDBCmd;
 		}
 
 		public String getDaticalDBDriversDir() {

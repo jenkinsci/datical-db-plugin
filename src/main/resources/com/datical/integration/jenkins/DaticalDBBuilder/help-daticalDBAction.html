@@ -7,10 +7,13 @@
 	<li><tt>Forecast</tt> - provides a report detail the changes, if any, that will be applied to your database along with impact analysis. This does NOT commit changes to your database. This file will be stored in your build workspace. Requires DB Server specification.
 	<li><tt>Snapshot</tt> - reverse engineers your database schema to a Datical DB XML file. This file will be stored in your build workspace. Requires DB Server specification.
 	<li><tt>Deploy</tt> - executes any changes required as detailed in your Project. This will generate a report detailing the chnages and be stored in your build workspace. Requires DB Server specification.  
-	<li><tt>Status</tt> - details the current status of the database in relation to your Project. DB Server specification is optional.
+	<li><tt>Status</tt> - provides the current status of the database in relation to your Project. DB Server specification is optional.
+	<li><tt>Status (Detailed)</tt> - details the current status of the database in relation to your Project. DB Server specification is required.
 	<li><tt>Check Drivers</tt> - validates the appropriate JDBC driver is available to Datical DB for your specific Project. The location of the drivers is specified in the Jenkins global config. (Jenkins --> Manage Jenkins --> Configure System --> Datical DB)
 	<li><tt>Generate Change Log from Differences</tt> - generates a new Change Log representing the difference between two databases in your Datical DB project. Two Servers are required (e.g., <i>Source Target</i>). diffChangelog <i>reference db</i> <i>target db</i> --output <i>path</i>. Output is optional.
 	<li><tt>Generate Report from Differences</tt> - like the previous Action, generates a report representing the difference between two databases in your Datical DB project. Two Servers are required (e.g., <i>Source</i> <i>Target</i>). diff <i>reference db</i> <i>target db</i>.
 	<li><tt>History</tt> - provides a history report of changes applied to your database(s).
+	<li><tt>Rollback</tt> - Roll the target database back to a given revision, date or by number of steps.
+	<li><tt>Deploy with Auto Rollback</tt> - Identical to "Deploy" but will Automatically Rollback to previous state in event of error.
 
 </div>
