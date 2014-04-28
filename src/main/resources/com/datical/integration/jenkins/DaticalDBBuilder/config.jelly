@@ -28,6 +28,7 @@
   		<option value="deploy-autoRollback" selected="${if (instance.getDaticalDBAction().compareTo('deploy-autoRollback')==0) selected=true;}">Deploy with Auto Rollback</option>
   		<option value="newProject" selected="${if (instance.getDaticalDBAction().compareTo('newProject')==0) selected=true;}">Create Datical Project</option>
   		<option value="newDbDef" selected="${if (instance.getDaticalDBAction().compareTo('newDbDef')==0) selected=true;}">Create New Database Definition</option>
+  		<option value="installLicense" selected="${if (instance.getDaticalDBAction().compareTo('installLicense')==0) selected=true;}">Install License</option>
   	</select>
   </f:entry>
 
