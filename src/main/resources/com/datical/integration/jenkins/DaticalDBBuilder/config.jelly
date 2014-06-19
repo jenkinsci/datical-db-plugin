@@ -36,6 +36,12 @@
     <f:entry title="Datical DB Command" field="daticalDBCmdProject">
       <f:textbox />
     </f:entry>
+    <f:entry title="Export SQL" field="daticalDBExportSQL">
+    	<f:checkbox checked="${if (instance.getDaticalExportSQL().compareTo('true')==0) checked=true;}"/>
+	</f:entry>    	
+    <f:entry title="Export Rollback SQL" field="daticalDBExportRollbackSQL">
+    	<f:checkbox checked="${if (instance.getDaticalExportRollbackSQL().compareTo('true')==0) checked=true;}"/>
+	</f:entry>    	
   </f:advanced>
 
 </j:jelly>

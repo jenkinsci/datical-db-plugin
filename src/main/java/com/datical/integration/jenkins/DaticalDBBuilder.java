@@ -38,16 +38,21 @@ public class DaticalDBBuilder extends Builder {
 	private final String daticalDBServer;
 	private final String daticalDBAction; // forecast, snapshot, deploy, rollback, diffChangelog, diff, history
 	private final String daticalDBCmdProject;
+	private final String daticalDBExportSQL;
+	private final String daticalDBExportRollbackSQL;
+	
 
 	// Fields in config.jelly must match the parameter names in the
 	// "DataBoundConstructor"
 	@DataBoundConstructor
-	public DaticalDBBuilder(String daticalDBProjectDir, String daticalDBServer, String daticalDBAction, String daticalDBCmdProject) {
+	public DaticalDBBuilder(String daticalDBProjectDir, String daticalDBServer, String daticalDBAction, String daticalDBCmdProject, String daticalDBExportSQL, String daticalDBExportRollbackSQL) {
 
 		this.daticalDBProjectDir = daticalDBProjectDir;
 		this.daticalDBServer = daticalDBServer;
 		this.daticalDBAction = daticalDBAction;
 		this.daticalDBCmdProject = daticalDBCmdProject;
+		this.daticalDBExportSQL = daticalDBExportRollbackSQL;
+		this.daticalDBExportRollbackSQL = daticalDBExportRollbackSQL;
 
 	}
 
@@ -66,7 +71,14 @@ public class DaticalDBBuilder extends Builder {
 	public String getDaticalDBCmdProject() {
 		return daticalDBCmdProject;
 	}
+	
+	public String getDaticalDBExportSQL() {
+		return daticalDBExportSQL;
+	}
 
+	public String getDaticalDBExportRollbackSQL() {
+		return daticalDBExportRollbackSQL;
+	}
 	@Override
 	public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
 
@@ -117,7 +129,17 @@ public class DaticalDBBuilder extends Builder {
 			daticalCmd = encodeCmdLine(daticalCmd);
 		}
 		
-		String commandLine = daticalCmd + " " + "\"" + daticalDriversArg + "\"" + " " + "\"" + daticalProjectArg + "\"" + " " + getDaticalDBActionForCmd(daticalDBAction, daticalDBServer);
+		String genSQL = "";
+		String genRollbackSQL = "";
+		if ("true".equals(getDaticalDBExportSQL())) {
+			genSQL = "--genSQL";
+		}
+		if ("true".equals(getDaticalDBExportRollbackSQL())) {
+			genRollbackSQL = "--genRollbackSQL";
+		}
+		
+		
+		String commandLine = daticalCmd + " " + "\"" + daticalDriversArg + "\"" + " " + "\"" + daticalProjectArg + "\"" + " " + genSQL + " " + genRollbackSQL + " " + getDaticalDBActionForCmd(daticalDBAction, daticalDBServer);
 		String cmdLine = convertSeparator(commandLine, (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP));
 
 		listener.getLogger().println("File separators sanitized: " + cmdLine);
