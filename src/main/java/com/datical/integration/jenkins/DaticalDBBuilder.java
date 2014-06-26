@@ -51,7 +51,7 @@ public class DaticalDBBuilder extends Builder {
 		this.daticalDBServer = daticalDBServer;
 		this.daticalDBAction = daticalDBAction;
 		this.daticalDBCmdProject = daticalDBCmdProject;
-		this.daticalDBExportSQL = daticalDBExportRollbackSQL;
+		this.daticalDBExportSQL = daticalDBExportSQL;
 		this.daticalDBExportRollbackSQL = daticalDBExportRollbackSQL;
 
 	}
@@ -93,6 +93,8 @@ public class DaticalDBBuilder extends Builder {
 		listener.getLogger().println("Datical DB Project Dir = " + daticalDBProjectDir);
 		listener.getLogger().println("Datical DB Server = " + daticalDBServer);
 		listener.getLogger().println("Datical DB Action = " + daticalDBAction);
+		listener.getLogger().println("Datical DB Export SQL = " + getDaticalDBExportSQL());
+		listener.getLogger().println("Datical DB Export Rollback SQL = " + getDaticalDBExportRollbackSQL());
 
 		// construct the command
 		String daticalCmd;
@@ -125,7 +127,6 @@ public class DaticalDBBuilder extends Builder {
 		
 		//check and encode path for spaces (windows environment)
 		if (!launcher.isUnix()) {
-			
 			daticalCmd = encodeCmdLine(daticalCmd);
 		}
 		
@@ -135,9 +136,12 @@ public class DaticalDBBuilder extends Builder {
 			genSQL = "--genSQL";
 		}
 		if ("true".equals(getDaticalDBExportRollbackSQL())) {
-			genRollbackSQL = "--genRollbackSQL";
+			if ("rollback".equals(getDaticalDBAction())) {
+				genRollbackSQL = "--onlySQL";
+			} else {
+				genRollbackSQL = "--genRollbackSQL";
+			}
 		}
-		
 		
 		String commandLine = daticalCmd + " " + "\"" + daticalDriversArg + "\"" + " " + "\"" + daticalProjectArg + "\"" + " " + genSQL + " " + genRollbackSQL + " " + getDaticalDBActionForCmd(daticalDBAction, daticalDBServer);
 		String cmdLine = convertSeparator(commandLine, (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP));
