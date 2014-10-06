@@ -20,7 +20,8 @@
   		<option value="deploy" selected="${if (instance.getDaticalDBAction().compareTo('deploy')==0) selected=true;}">Deploy</option>
   		<option value="status" selected="${if (instance.getDaticalDBAction().compareTo('status')==0) selected=true;}">Status</option>
   		<option value="statusDetails" selected="${if (instance.getDaticalDBAction().compareTo('statusDetails')==0) selected=true;}">Status (Detailed)</option>
-  		<option value="checkdrivers" selected="${if (instance.getDaticalDBAction().compareTo('checkdrivers')==0) selected=true;}">Check Drivers</option> 
+  		<option value="checkdrivers" selected="${if (instance.getDaticalDBAction().compareTo('checkdrivers')==0) selected=true;}">Check Drivers</option>
+  		<option value="checkRules" selected="${if (instance.getDaticalDBAction().compareTo('checkRules')==0) selected=true;}">Check Rules</option>
   		<option value="diffChangelog" selected="${if (instance.getDaticalDBAction().compareTo('diffChangelog')==0) selected=true;}">Generate Change Log from Differences</option>
   		<option value="diff" selected="${if (instance.getDaticalDBAction().compareTo('diff')==0) selected=true;}">Generate Report from Differences</option>
   		<option value="history" selected="${if (instance.getDaticalDBAction().compareTo('history')==0) selected=true;}">History</option>

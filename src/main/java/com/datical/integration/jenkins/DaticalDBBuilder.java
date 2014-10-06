@@ -204,7 +204,7 @@ public class DaticalDBBuilder extends Builder {
 		// See config.jelly for all options used.
 		String daticalDBActionForCmd = null;
 
-		if (daticalDBAction.equals("checkdrivers")) {
+		if (daticalDBAction.equals("checkdrivers") || daticalDBAction.equals("checkRules")) {
 
 			daticalDBActionForCmd = daticalDBAction;
 		
