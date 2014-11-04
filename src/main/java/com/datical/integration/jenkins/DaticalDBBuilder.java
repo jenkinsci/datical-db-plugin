@@ -212,6 +212,10 @@ public class DaticalDBBuilder extends Builder {
 			
 			daticalDBActionForCmd = "diffChangelog" + " " + daticalDBServer;
 			
+		} else if  (daticalDBAction.equals("setProperty")) {
+			
+			daticalDBActionForCmd = "set property " + daticalDBServer;
+			
 		} else {
 			
 			daticalDBActionForCmd = daticalDBAction + " " + daticalDBServer;

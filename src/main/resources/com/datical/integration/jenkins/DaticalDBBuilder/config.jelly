@@ -30,6 +30,8 @@
   		<option value="newProject" selected="${if (instance.getDaticalDBAction().compareTo('newProject')==0) selected=true;}">Create Datical Project</option>
   		<option value="newDbDef" selected="${if (instance.getDaticalDBAction().compareTo('newDbDef')==0) selected=true;}">Create New Database Definition</option>
   		<option value="installLicense" selected="${if (instance.getDaticalDBAction().compareTo('installLicense')==0) selected=true;}">Install License</option>
+  		<option value="setProperty" selected="${if (instance.getDaticalDBAction().compareTo('setProperty')==0) selected=true;}">Set Property</option>
+  		
   	</select>
   </f:entry>
 
