@@ -18,7 +18,6 @@ import org.kohsuke.stapler.QueryParameter;
 
 import javax.servlet.ServletException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,16 +35,17 @@ public class DaticalDBBuilder extends Builder {
 
 	private final String daticalDBProjectDir;
 	private final String daticalDBServer;
-	private final String daticalDBAction; // forecast, snapshot, deploy, rollback, diffChangelog, diff, history
+	private final String daticalDBAction;
 	private final String daticalDBCmdProject;
 	private final String daticalDBExportSQL;
 	private final String daticalDBExportRollbackSQL;
+	private final String daticalDBScriptDir;
 	
 
 	// Fields in config.jelly must match the parameter names in the
 	// "DataBoundConstructor"
 	@DataBoundConstructor
-	public DaticalDBBuilder(String daticalDBProjectDir, String daticalDBServer, String daticalDBAction, String daticalDBCmdProject, String daticalDBExportSQL, String daticalDBExportRollbackSQL) {
+	public DaticalDBBuilder(String daticalDBProjectDir, String daticalDBServer, String daticalDBAction, String daticalDBCmdProject, String daticalDBExportSQL, String daticalDBExportRollbackSQL, String daticalDBScriptDir) {
 
 		this.daticalDBProjectDir = daticalDBProjectDir;
 		this.daticalDBServer = daticalDBServer;
@@ -53,6 +53,7 @@ public class DaticalDBBuilder extends Builder {
 		this.daticalDBCmdProject = daticalDBCmdProject;
 		this.daticalDBExportSQL = daticalDBExportSQL;
 		this.daticalDBExportRollbackSQL = daticalDBExportRollbackSQL;
+		this.daticalDBScriptDir = daticalDBScriptDir;
 
 	}
 
@@ -79,6 +80,10 @@ public class DaticalDBBuilder extends Builder {
 	public String getDaticalDBExportRollbackSQL() {
 		return daticalDBExportRollbackSQL;
 	}
+	
+	public String getDaticalDBScriptDir() {
+		return daticalDBScriptDir;
+	}
 	@Override
 	public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
 
@@ -95,6 +100,7 @@ public class DaticalDBBuilder extends Builder {
 		listener.getLogger().println("Datical DB Action = " + daticalDBAction);
 		listener.getLogger().println("Datical DB Export SQL = " + getDaticalDBExportSQL());
 		listener.getLogger().println("Datical DB Export Rollback SQL = " + getDaticalDBExportRollbackSQL());
+		listener.getLogger().println("Datical DB Script Dir = " + getDaticalDBScriptDir());
 
 		// construct the command
 		String daticalCmd;
@@ -143,8 +149,19 @@ public class DaticalDBBuilder extends Builder {
 			}
 		}
 		
-		String commandLine = daticalCmd + " " + "\"" + daticalDriversArg + "\"" + " " + "\"" + daticalProjectArg + "\"" + " " + genSQL + " " + genRollbackSQL + " " + getDaticalDBActionForCmd(daticalDBAction, daticalDBServer);
+		String commandLine = "";
+		if (daticalDBAction.equals("groovyCreateProject")) {
+			String daticalDBGroovyScript = "\"" + getDaticalDBScriptDir() + (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP) + "project_creator.groovy" + "\"";
+			commandLine = daticalCmd + " " + "\"" + daticalDriversArg + "\"" + " " + "\"" + daticalProjectArg + "\"" + " groovy " + daticalDBGroovyScript + " " + daticalDBServer; 
+		} else if (daticalDBAction.equals("groovyBaseline")) {
+			String daticalDBGroovyScript = "\"" + getDaticalDBScriptDir() + (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP) + "project_baseline.groovy" + "\"";
+			commandLine = daticalCmd + " " + "\"" + daticalDriversArg + "\"" + " " + "\"" + daticalProjectArg + "\"" + " groovy " + daticalDBGroovyScript + " " + daticalDBServer; 
+		} else {
+			commandLine = daticalCmd + " " + "\"" + daticalDriversArg + "\"" + " " + "\"" + daticalProjectArg + "\"" + " " + genSQL + " " + genRollbackSQL + " " + getDaticalDBActionForCmd(daticalDBAction, daticalDBServer);
+		}
+		
 		String cmdLine = convertSeparator(commandLine, (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP));
+		cmdLine.replace("file:\\", "file:/");
 
 		listener.getLogger().println("File separators sanitized: " + cmdLine);
 
@@ -215,6 +232,10 @@ public class DaticalDBBuilder extends Builder {
 		} else if  (daticalDBAction.equals("setProperty")) {
 			
 			daticalDBActionForCmd = "set property " + daticalDBServer;
+			
+		} else if (daticalDBAction.equals("groovyCreateProject") || daticalDBAction.equals("groovyBaselineProject")) {
+			
+			daticalDBActionForCmd = "groovy" + daticalDBServer;
 			
 		} else {
 			
@@ -319,7 +340,7 @@ public class DaticalDBBuilder extends Builder {
 		public String getDaticalDBDriversDir() {
 			return daticalDBDriversDir;
 		}
-
+		
 	}
 
 	public static String convertSeparator(String cmdLine, String newSeparator) {

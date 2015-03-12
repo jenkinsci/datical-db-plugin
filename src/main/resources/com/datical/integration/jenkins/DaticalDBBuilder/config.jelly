@@ -9,7 +9,7 @@
     <f:textbox />
   </f:entry>
   
-  <f:entry title="DB Server" field="daticalDBServer">
+  <f:entry title="Parameters" field="daticalDBServer">
     <f:textbox />
   </f:entry>
 
@@ -31,7 +31,8 @@
   		<option value="newDbDef" selected="${if (instance.getDaticalDBAction().compareTo('newDbDef')==0) selected=true;}">Create New Database Definition</option>
   		<option value="installLicense" selected="${if (instance.getDaticalDBAction().compareTo('installLicense')==0) selected=true;}">Install License</option>
   		<option value="setProperty" selected="${if (instance.getDaticalDBAction().compareTo('setProperty')==0) selected=true;}">Set Property</option>
-  		
+  		<option value="groovyCreateProject" selected="${if (instance.getDaticalDBAction().compareTo('groovyCreateProject')==0) selected=true;}">Create Datical Project (project_creator.groovy)</option>
+  		<option value="groovyBaseline" selected="${if (instance.getDaticalDBAction().compareTo('groovyBaseline')==0) selected=true;}">Baseline Datical Project (project_baseline.groovy)</option>
   	</select>
   </f:entry>
 
@@ -44,7 +45,11 @@
 	</f:entry>    	
     <f:entry title="Export Rollback SQL" field="daticalDBExportRollbackSQL">
     	<f:checkbox checked="${if (instance.getDaticalExportRollbackSQL().compareTo('true')==0) checked=true;}"/>
-	</f:entry>    	
+	</f:entry>
+    <f:entry title="Datical DB Script Dir" field="daticalDBScriptDir">
+      <f:textbox />
+    </f:entry>
+	    	
   </f:advanced>
 
 </j:jelly>
