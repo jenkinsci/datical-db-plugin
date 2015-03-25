@@ -17,6 +17,8 @@ Edit pom.xml to bump the release number and add -SNAPSHOT
 
 git commit -a pom.xml
 
+(NOTE: make sure Jenkins is not running.)
+
 mvn -Dresume=false release:prepare release:perform
 
 Select the defaults
