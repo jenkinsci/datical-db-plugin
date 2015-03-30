@@ -8,7 +8,7 @@
 
 	<groupId>com.datical.integration.jenkins</groupId>
 	<artifactId>datical-db-plugin</artifactId>
-	<version>1.0.35</version>
+	<version>1.0.36-SNAPSHOT</version>
 	<packaging>hpi</packaging>
 	<name>DaticalDB4Jenkins</name>
 
@@ -37,10 +37,11 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/jenkinsci/${project.artifactId}.git</connection>
-		<developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}.git</developerConnection>
-		<url>https://github.com/jenkinsci/${project.artifactId}.git</url>
-	</scm>
+		<connection>scm:git:git://github.com/jenkinsci/datical-db-plugin.git</connection>
+		<developerConnection>scm:git:git@github.com:jenkinsci/datical-db-plugin.git</developerConnection>
+		<url>https://github.com/jenkinsci/datical-db-plugin.git</url>
+	  <tag>HEAD</tag>
+  </scm>
 
 	<!-- get every artifact through repo.jenkins-ci.org, which proxies all the 
 		artifacts that we need -->
