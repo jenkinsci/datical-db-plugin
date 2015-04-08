@@ -44,6 +44,11 @@
 		<tag>HEAD</tag>
 	</scm>
 
+	<properties>
+		<!-- Maven plugin versions provided by parent are outdated. -->
+		<maven-release-plugin.version>2.5.1</maven-release-plugin.version>
+	</properties>
+
 	<!-- get every artifact through repo.jenkins-ci.org, which proxies all the 
 		artifacts that we need -->
 	<repositories>
