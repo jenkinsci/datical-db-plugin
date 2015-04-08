@@ -47,7 +47,7 @@
 	<!--
 	checking to see if bumping up the parent version will remove this requirement
 	<properties>
-		<!-- Maven plugin versions provided by parent are outdated. -->
+		<! Maven plugin versions provided by parent are outdated. >
 		<maven-release-plugin.version>2.5.1</maven-release-plugin.version>
 	</properties>
 	-->
