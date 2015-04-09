@@ -19,9 +19,7 @@ git commit -a pom.xml
 
 (NOTE: make sure Jenkins is not running.)
 
-mvn org.apache.maven.plugins:maven-release-plugin:2.5:prepare
-
-mvn org.apache.maven.plugins:maven-release-plugin:2.5:perform
+mvn release:prepare release:perform
 
 git push (should your git status still be "dirty")
 
