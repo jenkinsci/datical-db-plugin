@@ -150,12 +150,21 @@ public class DaticalDBBuilder extends Builder {
 		}
 		
 		String commandLine = "";
+		String daticalDBGroovyScriptFilePrefix = "";
+		if (launcher.isUnix()) {
+			
+		} else {
+			daticalDBGroovyScriptFilePrefix = "file:/";
+		}
 		if (daticalDBAction.equals("groovyCreateProject")) {
-			String daticalDBGroovyScript = "\"" + getDaticalDBScriptDir() + (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP) + "project_creator.groovy" + "\"";
+			String daticalDBGroovyScript = "\"" + daticalDBGroovyScriptFilePrefix + getDaticalDBScriptDir() + (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP) + "project_creator.groovy" + "\"";
 			commandLine = daticalCmd + " " + "\"" + daticalDriversArg + "\"" + " " + "\"" + daticalProjectArg + "\"" + " groovy " + daticalDBGroovyScript + " " + daticalDBServer; 
 		} else if (daticalDBAction.equals("groovyBaseline")) {
-			String daticalDBGroovyScript = "\"" + getDaticalDBScriptDir() + (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP) + "project_baseline.groovy" + "\"";
+			String daticalDBGroovyScript = "\"" + daticalDBGroovyScriptFilePrefix + getDaticalDBScriptDir() + (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP) + "project_baseline.groovy" + "\"";
 			commandLine = daticalCmd + " " + "\"" + daticalDriversArg + "\"" + " " + "\"" + daticalProjectArg + "\"" + " groovy " + daticalDBGroovyScript + " " + daticalDBServer; 
+		} else if (daticalDBAction.equals("groovyConvertSQL")) {
+			String daticalDBGroovyScript = "\"" + daticalDBGroovyScriptFilePrefix + getDaticalDBScriptDir() + (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP) + "convert_sql.groovy" + "\"";
+			commandLine = daticalCmd + " " + "\"" + daticalDriversArg + "\"" + " " + "\"" + daticalProjectArg + "\"" + " groovy " + daticalDBGroovyScript + " " + daticalDBServer;
 		} else {
 			commandLine = daticalCmd + " " + "\"" + daticalDriversArg + "\"" + " " + "\"" + daticalProjectArg + "\"" + " " + genSQL + " " + genRollbackSQL + " " + getDaticalDBActionForCmd(daticalDBAction, daticalDBServer);
 		}
@@ -233,7 +242,7 @@ public class DaticalDBBuilder extends Builder {
 			
 			daticalDBActionForCmd = "set property " + daticalDBServer;
 			
-		} else if (daticalDBAction.equals("groovyCreateProject") || daticalDBAction.equals("groovyBaselineProject")) {
+		} else if (daticalDBAction.equals("groovyCreateProject") || daticalDBAction.equals("groovyBaselineProject") || daticalDBAction.equals("groovyConvertSQL")) {
 			
 			daticalDBActionForCmd = "groovy" + daticalDBServer;
 			

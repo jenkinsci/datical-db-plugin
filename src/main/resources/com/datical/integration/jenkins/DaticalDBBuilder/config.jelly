@@ -33,6 +33,7 @@
   		<option value="setProperty" selected="${if (instance.getDaticalDBAction().compareTo('setProperty')==0) selected=true;}">Set Property</option>
   		<option value="groovyCreateProject" selected="${if (instance.getDaticalDBAction().compareTo('groovyCreateProject')==0) selected=true;}">Create Datical Project (project_creator.groovy)</option>
   		<option value="groovyBaseline" selected="${if (instance.getDaticalDBAction().compareTo('groovyBaseline')==0) selected=true;}">Baseline Datical Project (project_baseline.groovy)</option>
+  		<option value="groovyConvertSQL" selected="${if (instance.getDaticalDBAction().compareTo('groovyConvertSQL')==0) selected=true;}">Convert SQL (convert_sql.groovy)</option>
   	</select>
   </f:entry>
 
