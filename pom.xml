@@ -8,7 +8,7 @@
 
 	<groupId>com.datical.integration.jenkins</groupId>
 	<artifactId>datical-db-plugin</artifactId>
-	<version>1.0.38</version>
+	<version>1.0.39-SNAPSHOT</version>
 	<packaging>hpi</packaging>
 	<name>DaticalDB4Jenkins</name>
 
@@ -40,7 +40,7 @@
 		<connection>scm:git:git://github.com/jenkinsci/datical-db-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:jenkinsci/datical-db-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/datical-db-plugin.git</url>
-		<tag>datical-db-plugin-1.0.38</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<!--
