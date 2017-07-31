@@ -170,7 +170,7 @@ public class DaticalDBBuilder extends Builder {
 		}
 		
 		String cmdLine = convertSeparator(commandLine, (launcher.isUnix() ? UNIX_SEP : WINDOWS_SEP));
-		cmdLine.replace("file:\\", "file:/");
+		cmdLine = cmdLine.replace("file:\\", "file:/");
 
 		listener.getLogger().println("File separators sanitized: " + cmdLine);
 
@@ -183,7 +183,7 @@ public class DaticalDBBuilder extends Builder {
 
 		ArgumentListBuilder args = new ArgumentListBuilder();
 		if (cmdLine != null) {
-			args.addTokenized((launcher.isUnix()) ? cmdLine : cmdLine);
+			args.addTokenized(cmdLine);
 			listener.getLogger().println("Execute from working directory: " + args.toStringWithQuote());
 		}
 
