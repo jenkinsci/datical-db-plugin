@@ -1,6 +1,7 @@
 <!--
   This view is used to render the installed plugins page.
 -->
+<?jelly escape-by-default='true'?>
 <div>
   DaticalDB4Jenkins provides a simple, intuitive way to run Datical DB during your Jenkins build.
 </div>
