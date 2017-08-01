@@ -10,7 +10,7 @@
 
 	<groupId>com.datical.integration.jenkins</groupId>
 	<artifactId>datical-db-plugin</artifactId>
-	<version>2.0.41-SNAPSHOT</version>
+	<version>2.0.41</version>
 	<packaging>hpi</packaging>
 	<name>DaticalDB4Jenkins</name>
 	<properties>
